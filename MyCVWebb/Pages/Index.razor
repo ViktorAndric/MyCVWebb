@@ -1,0 +1,261 @@
+﻿@page "/"
+@using MyCVWebb.Library.Data
+@using MyCVWebb.Library.Models
+@using System.Linq;
+@using MyCVWebb.Library.Models
+@inject IHttpClientFactory httpClientFactory
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<PageTitle>Viktor Andric</PageTitle>
+@* Firstpage: name, title, picture, link to github och linkedin *@
+<section style="height:100vh; width:100vw; overflow: hidden" class="bg-black p-0 m-0">
+	<div>
+		@if (IsAuthenticated)
+		{
+			<form method="post" action="Identity/Account/Logout">
+				<button type="submit" href="Identity/Account/Logout" class="btn btn-outline-danger ms-2 mt-2"><img style="height:40px" src="/logout-xxl.png" alt="LogOut" /></button>
+			</form>
+			<a type="submit" href="admin" class="btn btn-outline-light ms-2 mt-2"><img style="height:40px" src="/administrator-xxl.png" alt="Admin" /></a>
+		}
+		else
+		{
+			<a href="Identity/Account/Login"><img class="btn btn-outline-light ms-2 mt-2" style="height:40px" src="/login-xxl.png" alt="LogIn" /></a>
+		}
+
+
+	</div>
+
+	@if (aboutMe != null)
+	{
+		<div class="row d-flex justify-content-center align-items-center">
+			<div class="profile-image-container">
+				<img class="profile-image" src="/MicrosoftTeams-image3.png" alt="profilepicture" />
+			</div>
+			<h1 class="text-center text-light" style="color:antiquewhite">@aboutMe.FullName</h1>
+			<h3 class="text-center text-light" style="color:antiquewhite">@aboutMe.Title</h3>
+		</div>
+		<div class="row p-0">
+			<div class="d-flex justify-content-center p-0">
+				<a class="me-5 align-content-center" style="max-height:5px;" href="@aboutMe.LinkedInURL"><img style="max-height:50px;" src="/iconmonstr-linkedin-3.png" alt="Link to linkedin" /></a>
+				<a class="ms-5 align-content-center" style="max-height:5px;" href="@aboutMe.GithubURL"><img style="max-height:50px;" src="/github-icon-256x249-eb1fu3cu.png" alt="link to github" /></a>
+			</div>
+		</div>
+	}
+	else
+	{
+		<p>Loading...</p>
+	}
+</section>
+
+@* Second:  description*@
+<section class="bg-dark text-light" style="height:auto">
+	<div class="d-flex justify-content-center align-items-center">
+		@if (aboutMe != null && qoute != null)
+		{
+			<div class="row">
+				<div class="card bg-dark my-5">
+					<div class="card-body" style="color:antiquewhite">
+						<h2 class="card-title text-center mb-4">About Me</h2>
+						<h3 class="card-text text-center"><i class="fas fa-birthday-cake me-2"></i>@aboutMe.Age år</h3>
+						<h3 class="card-text text-center"><i class="fas fa-user me-2"></i>@aboutMe.Description</h3>
+						<h3 class="card-text text-center"><i class="fas fa-envelope me-2"></i>@aboutMe.Email</h3>
+					</div>
+				</div>
+				<div class="card bg-dark mb-5">
+					<div class="card-body" style="color:antiquewhite">
+						<h3 class="card-title text-center">Qoute of the day</h3>
+						<h4 class="card-text text-center" style="font-style:italic">"@qoute.Advice"</h4>
+					</div>
+				</div>
+			</div>
+
+		}
+		else
+		{
+			<p>Loading....</p>
+		}
+	</div>
+</section>
+@*fourth skills table*@
+<section style="height:auto;" class="bg-black p-0">
+	<div class="d-flex justify-content-center col-md-8 mx-auto">
+		@if (mySkills != null)
+		{
+			<table class="my-5 text-center">
+				<tr>
+					<th class="text-center">Skill</th>
+					<th class="text-center">Experience</th>
+					<th class="text-center">Skill Level</th>
+				</tr>
+				@foreach (var skill in mySkills)
+				{
+					<tr>
+						<td>@skill.Title</td>
+						<td>@skill.Experience years</td>
+						<td><progress value="@skill.SkillsLevel" max="100" style="width:90%"></progress></td>
+					</tr>
+				}
+			</table>
+		}
+		else
+		{
+			<p>Loading....</p>
+		}
+	</div>
+</section>
+@* fifth: education and experiences*@
+<section style="height:auto;" class="bg-black p-0">
+	<div class="d-flex justify-content-center col-md-8 mx-auto">
+		@if (myEducations != null)
+		{
+			<table class="my-5 text-center">
+				<tr>
+					<th class="text-center">Title</th>
+					<th class="text-center">School</th>
+					<th class="text-center">Years</th>
+				</tr>
+				@foreach (var education in myEducations)
+				{
+					<tr>
+						<td>@education.Title</td>
+						<td>@education.SchoolName</td>
+						<td>@education.Year</td>
+					</tr>
+				}
+			</table>
+		}
+		else
+		{
+			<p>Loading....</p>
+		}
+
+	</div>
+</section>
+<section style="height:auto;" class="bg-black p-0">
+
+	<div class="d-flex justify-content-center col-md-8 mx-auto">
+		@if (myProjects != null)
+		{
+			<table class="my-5 text-center">
+				<tr>
+					<th class="text-center">Title</th>
+					<th class="text-center">Company</th>
+					<th class="text-center">Years</th>
+				</tr>
+				@foreach (var work in myExperience)
+				{
+					<tr>
+						<td>@work.Title</td>
+						<td>@work.Company</td>
+						<td>@work.Year</td>
+					</tr>
+				}
+			</table>
+		}
+		else
+		{
+			<p>Loading....</p>
+		}
+
+	</div>
+</section>
+@* third: projects *@
+<section style="height:auto;" class="bg-black p-0">
+	<div class="d-flex justify-content-center col-md-8 mx-auto">
+		@if (myProjects != null)
+		{
+			<table class="my-5 text-center">
+				<tr>
+					<th class="text-center">Title</th>
+					<th class="text-center">Description</th>
+					<th class="text-center">Github</th>
+				</tr>
+				@foreach (var project in myProjects)
+				{
+					<tr>
+						<td>@project.Title</td>
+						<td>@project.Description</td>
+						<td class="text-center align-middle">
+							<a href="@project.GithubURL" class="text-center">
+								<img style="max-height:30px;" src="/github-icon-256x249-eb1fu3cu.png" alt="Github logo with link to project" />
+							</a>
+						</td>
+					</tr>
+				}
+			</table>
+		}
+		else
+		{
+			<p>Loading....</p>
+		}
+
+	</div>
+</section>
+@* contact form *@
+<section style="height:auto;" class="bg-black p-0">
+	<div class="row align-content-center">
+		<div class="col-lg-6 col-md-8 mx-auto my-5">
+			<h2 class="text-center mb-4">Contact me here</h2>
+			<EditForm Model="newContact" OnValidSubmit="SubmitContact" class="mx-2">
+				<DataAnnotationsValidator />
+				<ValidationSummary class="text-danger" />
+				<div>
+					<label class="form-label text-light">Enter Fullname</label>
+					<InputText class="form-control" @bind-Value="newContact.FullName"></InputText>
+				</div>
+				<div>
+					<label class="form-label text-light">Enter Email:</label>
+					<InputText class="form-control" @bind-Value="newContact.Email"></InputText>
+				</div>
+				<div>
+					<label class="form-label text-light">Enter your phonenumber</label>
+					<InputText class="form-control" @bind-Value="newContact.PhoneNumber"></InputText>
+				</div>
+				<div>
+					<label class="form-label text-light">Enter a message</label>
+					<InputTextArea class="form-control" @bind-Value="newContact.Message"></InputTextArea>
+				</div>
+				<button class="btn btn-outline-light mt-2" type="submit">Send</button>
+			</EditForm>
+		</div>
+	</div>
+</section>
+
+@code {
+	//instances to update
+	public Contact newContact = new Contact();
+	//List to write information
+	public About aboutMe;
+	public List<Contact> contact = new List<Contact>();
+	public List<Education> myEducations = new List<Education>();
+	public List<Project> myProjects = new List<Project>();
+	public List<Skills> mySkills = new List<Skills>();
+	public List<WorkExperience> myExperience = new List<WorkExperience>();
+	private HttpClient apiClient => httpClientFactory.CreateClient("MyCV.API");
+
+	private bool IsAuthenticated;
+	private Qoute qoute;
+	protected override async Task OnInitializedAsync()
+	{
+		var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+		IsAuthenticated = authState.User.Identity.IsAuthenticated;
+		aboutMe = await apiClient.GetFromJsonAsync<About>("about");
+		contact = await apiClient.GetFromJsonAsync<List<Contact>>("contacts");
+		myEducations = await apiClient.GetFromJsonAsync<List<Education>>("educations");
+		myProjects = await apiClient.GetFromJsonAsync<List<Project>>("projects");
+		mySkills = await apiClient.GetFromJsonAsync<List<Skills>>("skills");
+		myExperience = await apiClient.GetFromJsonAsync<List<WorkExperience>>("workexperiences");
+		qoute = await apiClient.GetFromJsonAsync<Qoute>("qoute");
+	}
+
+	public async void SubmitContact()
+	{
+		await apiClient.PostAsJsonAsync<Contact>("contact", newContact);
+		Console.WriteLine("Hello");
+		newContact = new Contact();
+		StateHasChanged();
+	}
+
+
+}
+

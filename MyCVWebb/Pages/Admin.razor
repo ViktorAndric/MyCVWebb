@@ -1,0 +1,504 @@
+﻿@page "/admin"
+@using MyCVWebb.Library.Data
+@using MyCVWebb.Library.Models
+@using System.Linq;
+@inject IHttpClientFactory httpClientFactory
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<PageTitle>Admin</PageTitle>
+<div class="bg-black text-light p-0 m-0" style="width=100vw">
+	<AuthorizeView >
+		<NotAuthorized>
+			<div>
+				<a type="submit" href="" class="btn btn-outline-light ms-2 mt-2"><img style="height:40px" src="/home-5-xxl.png" alt="Home Page" /></a>
+				<h2>You are not authorized</h2>
+			</div>
+		</NotAuthorized>
+		<Authorized Context="authContext">
+			<div>
+				<div>
+					<a type="submit" href="" class="btn btn-outline-light ms-2 mt-2"><img style="height:40px" src="/home-5-xxl.png" alt="Home Page"/></a>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-8 mx-auto">
+					<h2 class="text-center mb-4">Update About Me Section</h2>
+					<EditForm Model="updateAbout" OnValidSubmit="UpdateAbout" class="text-dark mx-2">
+						<DataAnnotationsValidator />
+						<ValidationSummary class="text-danger"/>
+						<div>
+							<label class="form-label text-light">Update name</label>
+							<InputText class="form-control" @bind-Value="updateAbout.FullName"></InputText>
+						</div>
+						<div>
+							<label class="form-label text-light">Update Title</label>
+							<InputText class="form-control" @bind-Value="updateAbout.Title"></InputText>
+						</div>
+						<div>
+							<label class="form-label text-light">Update Age</label>
+							<InputNumber class="form-control" @bind-Value="updateAbout.Age"></InputNumber>
+						</div>
+						<div>
+							<label class="form-label text-light">Update email</label>
+							<InputText class="form-control" @bind-Value="updateAbout.Email"></InputText>
+						</div>
+						<div>
+							<label class="form-label text-light">Update Phonenumber</label>
+							<InputText class="form-control" @bind-Value="updateAbout.PhoneNumber"></InputText>
+						</div>
+						<div>
+							<label class="form-label text-light">Update Adress</label>
+							<InputText class="form-control" @bind-Value="updateAbout.Adress"></InputText>
+						</div>
+						<div>
+							<label class="form-label text-light">Update Image</label>
+							<InputText class="form-control"  @bind-Value="updateAbout.ImagePath"></InputText>
+						</div>
+						<div>
+							<label class="form-label text-light">Update Description</label>
+							<InputText class="form-control" @bind-Value="updateAbout.Description"></InputText>
+						</div>
+						<div>
+							<label class="form-label text-light">Update Github Url</label>
+							<InputText class="form-control" @bind-Value="updateAbout.GithubURL"></InputText>
+						</div>
+						<div>
+							<label class="form-label text-light">Update LinkedIn Url</label>
+							<InputText class="form-control" @bind-Value="updateAbout.LinkedInURL"></InputText>
+						</div>
+						<button class="btn btn-outline-light mt-2" type="submit">Update About</button>
+					</EditForm>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-8 mx-auto px-2">
+					<h2 class="text-center mb-4">Update Skills</h2>
+					<EditForm Model="newSkill" OnValidSubmit="SubmitSkill" class="mx-2">
+						<DataAnnotationsValidator />
+						<ValidationSummary />
+					<div>
+							<label class="form-label text-light"> Choose Skill:</label>
+							<select class="form-control" value="@selectedSkill" @onchange="OnSkillSelected">
+							<option value=""> </option>
+							@foreach (var skill in mySkills)
+							{
+									<option value="@skill.Id">@skill.Title</option>
+							}
+						</select>
+					</div>
+						<div>
+							<label class="form-label text-light">New Title</label>
+							<InputText class="form-control" @bind-Value="newSkill.Title"></InputText>
+						</div>
+						<div>
+							<label class="form-label text-light">Input experince in years</label>
+							<InputNumber class="form-control" @bind-Value="newSkill.Experience"></InputNumber>
+						</div>
+						<div>
+							<label class="form-label text-light">Input skill level</label>
+							<InputNumber class="form-control" @bind-Value="newSkill.SkillsLevel"></InputNumber>
+						</div>
+						<button class="btn btn-outline-light mt-2" type="submit">Add new skill</button>
+						<button class="btn btn-outline-light mt-2" @onclick="UpdateSkill">Update skill</button>
+						<button class="btn btn-outline-light mt-2" @onclick="DeleteSkill">Delete skill</button>
+					</EditForm>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-8 mx-auto">
+					<h2 class="text-center mb-4">Update Projects</h2>
+					<EditForm Model="newProject" OnValidSubmit="SubmitProject" class="mx-2">
+						<DataAnnotationsValidator />
+						<ValidationSummary />
+						<div>
+							<label class="form-label text-light"> Choose Project:</label>
+							<select class="form-control" value="@selectedProject" @onchange="OnProjectSelected">
+								<option value=""> </option>
+								@foreach (var project in myProjects)
+								{
+									<option value="@project.Id">@project.Title</option>
+								}
+							</select>
+						</div>
+						<div>
+							<label class="form-label text-light">New Title</label>
+							<InputText class="form-control" @bind-Value="newProject.Title"></InputText>
+						</div>
+						<div>
+							<label class="form-label text-light">Input description</label>
+							<InputText class="form-control" @bind-Value="newProject.Description"></InputText>
+						</div>
+						<div>
+							<label class="form-label text-light">GithubUrl</label>
+							<InputText class="form-control" @bind-Value="newProject.GithubURL"></InputText>
+						</div>
+						<button class="btn btn-outline-light mt-2" type="submit">Add Project</button>
+						<button class="btn btn-outline-light mt-2" type="button" @onclick="UpdateProject">Update</button>
+						<button class="btn btn-outline-light mt-2" type="button" @onclick="DeleteProject">Delete</button>
+					</EditForm>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-8 mx-auto">
+					<h2 class="text-center mb-4">Update Educations</h2>
+					<EditForm Model="newEducation" OnValidSubmit="SubmitEducation" class="mx-2">
+						<DataAnnotationsValidator />
+						<ValidationSummary />
+						<div>
+							<label class="form-label text-light"> Choose Education:</label>
+							<select class="form-control" value="@selectedEducation" @onchange="OnEducationSelected">
+								<option value=""> </option>
+								@foreach (var education in myEducations)
+								{
+									<option value="@education.Id">@education.Title</option>
+								}
+							</select>
+						</div>
+						<div>
+							<label class="form-label text-light">New Title</label>
+							<InputText class="form-control" @bind-Value="newEducation.Title"></InputText>
+						</div>
+						<div>
+							<label class="form-label text-light">Input name of school</label>
+							<InputText class="form-control" @bind-Value="newEducation.SchoolName"></InputText>
+						</div>
+						<div>
+							<label class="form-label text-light">Input year/years when you studied</label>
+							<InputText class="form-control" @bind-Value="newEducation.Year"></InputText>
+						</div>
+						<button class="btn btn-outline-light mt-2" type="submit">Add Education</button>
+						<button class="btn btn-outline-light mt-2" type="button" @onclick="UpdateEducation">Update Education</button>
+						<button class="btn btn-outline-light mt-2" type="button" @onclick="DeleteEducation">Delete Education</button>
+					</EditForm>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-8 mx-auto">
+					<h2 class="text-center mb-4">Update Work Experience</h2>
+					<EditForm Model="newExperience" OnValidSubmit="SubmitExperience" class="mx-2">
+						<DataAnnotationsValidator />
+						<ValidationSummary />
+						<div>
+							<label class="form-label text-light"> Choose Experience:</label>
+							<select class="form-control" value="@selectedExperience" @onchange="OnExperienceSelected">
+								<option value=""> </option>
+								@foreach (var experience in myExperience)
+								{
+									<option value="@experience.Id">@experience.Title</option>
+								}
+							</select>
+						</div>
+						<div>
+							<label class="form-label text-light">New Company name</label>
+							<InputText class="form-control" @bind-Value="newExperience.Company"></InputText>
+						</div>
+						<div>
+							<label class="form-label text-light">Input Title</label>
+							<InputText class="form-control" @bind-Value="newExperience.Title"></InputText>
+						</div>
+						<div>
+							<label class="form-label text-light">Input years</label>
+							<InputText class="form-control" @bind-Value="newExperience.Year"></InputText>
+						</div>
+						<div>
+							<label class="form-label text-light">Input Description</label>
+							<InputText class="form-control" @bind-Value="newExperience.Description"></InputText>
+						</div>
+						<button class="btn btn-outline-light mt-2" type="submit">Add Education</button>
+						<button class="btn btn-outline-light mt-2" type="button" @onclick="UpdateExperience">Update Education</button>
+						<button class="btn btn-outline-light mt-2" type="button" @onclick="DeleteExperience">Delete Education</button>
+					</EditForm>
+				</div>
+			</div>
+			<div class="row mx-3">
+				<div class="d-flex align-items-center justify-content-center col-md-10 mx-auto">
+					<table class="my-5" id="contactTable" >
+						<tr>
+							<th>Name</th>
+							<th>Email</th>
+							<th>Number</th>
+							<th>Message</th>
+							<th>Delete</th>
+						</tr>
+						@if(MyContacts != null)
+						{
+								@foreach(var contact in MyContacts)
+								{
+									<tr>
+										<td>@contact.FullName</td>
+										<td>@contact.Email</td>
+										<td>@contact.PhoneNumber</td>
+										<td>@contact.Message</td>
+										<td><button class="btn btn-outline-danger" @onclick="() => DeleteContact(contact.Id)">Delete</button></td>
+									</tr>
+								}
+						}
+						else
+						{
+							<p>Loading....</p>
+						}
+					</table>	
+				</div>		
+			</div>
+		</Authorized>
+	</AuthorizeView>
+</div>
+
+@code {
+	//instances to update
+	public About updateAbout = new About();
+	public Contact newContact = new Contact();
+	public Education newEducation = new Education();
+	public Project newProject = new Project();
+	public Skills newSkill = new Skills();
+	public WorkExperience newExperience = new WorkExperience();
+	//List to write information
+	public About aboutMe;
+	public List<Contact> MyContacts = new List<Contact>();
+	public List<Education> myEducations = new List<Education>();
+	public List<Project> myProjects = new List<Project>();
+	public List<Skills> mySkills = new List<Skills>();
+	public List<WorkExperience> myExperience = new List<WorkExperience>();
+	private HttpClient apiClient => httpClientFactory.CreateClient("MyCV.API");
+	//To set an id
+	private string selectedProject;
+	private string selectedSkill;
+	private string selectedEducation;
+	private string selectedExperience;
+	private string selectedContact;
+
+	protected override async Task OnInitializedAsync()
+	{
+		// var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+		// IsAuthenticated = authState.User.Identity.IsAuthenticated;
+		aboutMe = await apiClient.GetFromJsonAsync<About>("about");
+		MyContacts = await apiClient.GetFromJsonAsync<List<Contact>>("contacts");
+		myEducations = await apiClient.GetFromJsonAsync<List<Education>>("educations");
+		myProjects = await apiClient.GetFromJsonAsync<List<Project>>("projects");
+		mySkills = await apiClient.GetFromJsonAsync<List<Skills>>("skills");
+		myExperience = await apiClient.GetFromJsonAsync<List<WorkExperience>>("workexperiences");
+		updateAbout = aboutMe;
+	}
+
+	private async void DeleteContact(string id)
+	{
+		await apiClient.DeleteAsync($"contact/{id}");
+		MyContacts = await apiClient.GetFromJsonAsync<List<Contact>>("contacts");
+		StateHasChanged();
+	}
+
+	//Handle About me Finished
+	public async void UpdateAbout()
+	{
+		updateAbout.Id = aboutMe.Id;
+		await apiClient.PutAsJsonAsync<About>($"about/{updateAbout.Id}", updateAbout);
+		aboutMe = await apiClient.GetFromJsonAsync<About>("about");
+		StateHasChanged();
+	}
+
+	//Handle Skills KLAR
+	private void OnSkillSelected(ChangeEventArgs e)
+	{
+		selectedSkill = e.Value.ToString();
+		if(string.IsNullOrEmpty(selectedSkill))
+		{
+			newSkill = new Skills();
+		}
+		else
+		{
+			newSkill = mySkills.FirstOrDefault(p => p.Id == selectedSkill);
+		}
+	}
+	public async void SubmitSkill()
+	{
+		await apiClient.PostAsJsonAsync<Skills>("skill", newSkill);
+		mySkills = await apiClient.GetFromJsonAsync<List<Skills>>("skills");
+		newSkill = new Skills();
+		StateHasChanged();
+	}
+	public async void UpdateSkill()
+	{
+		if(selectedSkill == "")
+		{
+			Console.WriteLine("No skill choosen");
+		}
+		else
+		{
+			newSkill.Id = selectedSkill;
+			await apiClient.PutAsJsonAsync<Skills>($"/skill/{newSkill.Id}", newSkill);
+			mySkills = await apiClient.GetFromJsonAsync<List<Skills>>("skills");
+			newSkill = new Skills();
+			StateHasChanged();
+		}
+	}
+	public async void DeleteSkill()
+	{
+		if(string.IsNullOrEmpty(selectedSkill))
+		{
+			Console.WriteLine("No skill choosen");
+		}
+		else
+		{	
+			await apiClient.DeleteAsync($"skill/{newSkill.Id}");
+			mySkills = await apiClient.GetFromJsonAsync<List<Skills>>("skills");
+			newSkill = new Skills();
+			StateHasChanged();
+		}
+	}
+
+	//Handle Projects KLAR
+	private void OnProjectSelected(ChangeEventArgs e)
+	{
+		selectedProject = e.Value.ToString();
+		if(string.IsNullOrEmpty(selectedProject))
+		{
+			newProject = new Project();
+		}
+		else
+		{
+			newProject = myProjects.FirstOrDefault(p => p.Id == selectedProject);
+		}
+	}
+
+	public async void SubmitProject()
+	{
+		await apiClient.PostAsJsonAsync<Project>("project", newProject);
+		myProjects = await apiClient.GetFromJsonAsync<List<Project>>("projects");
+		newProject = new Project();
+		StateHasChanged();
+	}
+	public async void DeleteProject()
+	{
+		if(string.IsNullOrEmpty(selectedProject))
+		{
+			Console.WriteLine("No Project choosen");
+		}
+		else
+		{
+			await apiClient.DeleteAsync($"project/{newProject.Id}");
+			myProjects = await apiClient.GetFromJsonAsync<List<Project>>("projects");
+			newProject = new Project();
+			StateHasChanged();
+		}
+	}
+	public async void UpdateProject()
+	{
+		if(string.IsNullOrEmpty(selectedProject))
+		{
+			Console.WriteLine("No Project choosen");
+		}
+		else
+		{	
+			newProject.Id = selectedProject;
+			await apiClient.PutAsJsonAsync<Project>($"/project/{newProject.Id}", newProject);
+			myProjects = await apiClient.GetFromJsonAsync<List<Project>>("projects");
+			newProject = new Project();
+			StateHasChanged();
+		}
+	}
+
+	//Handle Education KLAR
+	public void OnEducationSelected(ChangeEventArgs e)
+	{
+		selectedEducation = e.Value.ToString();
+		if (string.IsNullOrEmpty(selectedEducation))
+		{
+			newEducation = new Education();
+		}
+		else
+		{
+			newEducation = myEducations.FirstOrDefault(p => p.Id == selectedEducation);
+		}
+	}
+	public async void SubmitEducation()
+	{
+		await apiClient.PostAsJsonAsync<Education>("education", newEducation);
+		myEducations = await apiClient.GetFromJsonAsync<List<Education>>("educations");
+		newEducation = new Education();
+		StateHasChanged();
+	}
+	public async void UpdateEducation()
+	{
+		if (string.IsNullOrEmpty(selectedEducation))
+		{
+			Console.WriteLine("No education choosen");
+		}
+		else
+		{
+			newEducation.Id = selectedEducation;
+			await apiClient.PutAsJsonAsync<Education>($"/education/{newEducation.Id}", newEducation);
+			myEducations = await apiClient.GetFromJsonAsync<List<Education>>("educations");
+			newEducation = new Education();
+			StateHasChanged();
+		}
+	}
+	public async void DeleteEducation()
+	{
+		if(string.IsNullOrEmpty(selectedEducation))
+		{
+			Console.WriteLine("No education choosen");
+		}
+		else
+		{
+			newEducation.Id = selectedEducation;
+			await apiClient.DeleteAsync($"education/{newEducation.Id}");
+			myEducations = await apiClient.GetFromJsonAsync<List<Education>>("educations");
+			newEducation = new Education();
+			StateHasChanged();
+		}
+	}
+
+	//Handle WorkExperience KLAR
+	public void OnExperienceSelected(ChangeEventArgs e)
+	{
+		selectedExperience = e.Value.ToString();
+		if(string.IsNullOrEmpty(selectedExperience))
+		{
+			newExperience = new WorkExperience();
+		}
+		else
+		{
+			newExperience = myExperience.FirstOrDefault(ex => ex.Id == selectedExperience);
+		}
+	}
+	public async void SubmitExperience()
+	{
+		await apiClient.PostAsJsonAsync<WorkExperience>("workexperience", newExperience);
+		myExperience = await apiClient.GetFromJsonAsync<List<WorkExperience>>("workexperiences");
+		newExperience = new WorkExperience();
+		StateHasChanged();
+	}
+	public async void UpdateExperience()
+	{
+		if(string.IsNullOrEmpty(selectedExperience))
+		{
+			Console.WriteLine("No experience choosen");
+		}
+		else
+		{
+			newExperience.Id = selectedExperience;
+			await apiClient.PutAsJsonAsync<WorkExperience>($"/workexperience/{newExperience.Id}", newExperience);
+			myEducations = await apiClient.GetFromJsonAsync<List<Education>>("workexperiences");
+			newExperience = new WorkExperience();
+			StateHasChanged();
+		}
+	}
+	public async void DeleteExperience()
+	{
+		if(string.IsNullOrEmpty(selectedExperience))
+		{
+			Console.WriteLine("No experince choosen");
+		}
+		else
+		{	
+			newExperience.Id = selectedExperience;
+			await apiClient.DeleteAsync($"workexperience/{newExperience.Id}");
+			myExperience = await apiClient.GetFromJsonAsync<List<WorkExperience>>("workexperiences");
+			newExperience = new WorkExperience();
+			StateHasChanged();
+		}
+	}
+}
