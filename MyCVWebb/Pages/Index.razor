@@ -204,19 +204,19 @@
 		</div>
 	</div>
 	<div class="container">
-		<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+		<footer class="d-flex flex-wrap justify-content-between align-items-center mt-4 border-top">
 			<div class="col-md-4 d-flex align-items-center">
 				@if (IsAuthenticated)
 				{
 					<form method="post" action="Identity/Account/Logout">
-						<button type="submit" href="Identity/Account/Logout" class="btn btn-outline-danger ms-2 mt-2"><img style="height:40px" src="/logout-xxl.png" alt="LogOut"/></button>
+						<button type="submit" href="Identity/Account/Logout" class="btn btn-outline-danger my-2 me-2 text-center"><img style="height:40px" src="/logout-xxl.png" alt="LogOut"/></button>
 					</form>
-					<a type="submit" href="admin" class="btn btn-outline-light ms-2 mt-2"><img style="height:40px" src="/administrator-xxl.png" alt="Admin"/></a>
+					<a type="submit" href="admin" class="btn btn-outline-light my-2 text-center"><img style="height:40px" src="/administrator-xxl.png" alt="Admin"/></a>
 					
 				}
 				else
 				{
-					<a href="Identity/Account/Login"><img class="btn btn-outline-light ms-2 mt-2" style="height:40px" src="/login-xxl.png" alt="LogIn" /></a>
+					<a href="Identity/Account/Login"><img class="btn btn-outline-light my-2 text-center" style="height:40px" src="/login-xxl.png" alt="LogIn" /></a>
 				}
 			</div>
 
