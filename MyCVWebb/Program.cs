@@ -22,9 +22,10 @@ builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuth
 
 builder.Services.AddHttpClient("MyCV.API", client =>
 {
-	client.BaseAddress = new Uri("https://localhost:7122/");
+	client.BaseAddress = new Uri("https://mycvwebbapi.azurewebsites.net");
 });
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

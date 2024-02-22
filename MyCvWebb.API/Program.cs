@@ -82,11 +82,11 @@ app.MapGet("/about", async () =>
 {
 	var aboutMeList = await AboutDB.GetAllAsync("AboutMe");
 	var aboutMe = aboutMeList.FirstOrDefault();
-	if (aboutMe != null)
+	if (aboutMe is not null)
 	{
 		return Results.Ok(aboutMe);
 	}
-	return Results.NotFound(aboutMe);
+	return Results.NotFound("About me not found...");
 });
 
 //U
@@ -94,7 +94,7 @@ app.MapPut("/about/{id}", async (string id, About about) =>
 {
 	var result = await AboutDB.UpdateAsync<About>(id, "AboutMe", about);
 
-	if (result != null)
+	if (result is not null)
 	{
 		return Results.Ok(result);
 	}
@@ -126,14 +126,24 @@ app.MapPost("/contact", async (Contact contact) =>
 app.MapGet("/contacts", async () =>
 {
 	var newContact = await ContactDB.GetAllAsync("Contact");
-	return Results.Ok(newContact);
+	if (newContact is not null)
+	{
+		return Results.Ok(newContact);
+	}
+
+	return Results.NotFound("Not found...");
 });
 
 //R by id
 app.MapGet("/contact/{id}", async (string id) =>
 {
 	var contact = await ContactDB.GetByIDAsync<Contact>(id, "Contact");
-	return Results.Ok(contact);
+	if (contact is not null)
+	{
+		return Results.Ok(contact);
+	}
+
+	return Results.NotFound("Not found...");
 });
 
 //U
@@ -141,7 +151,7 @@ app.MapPut("/contact/{id}", async (string id, Contact contact) =>
 {
 	var result = await ContactDB.UpdateAsync<Contact>(id, "Contact", contact);
 
-	if (result != null)
+	if (result is not null)
 	{
 		return Results.Ok(result);
 	}
@@ -187,7 +197,7 @@ app.MapPut("/education{id}", async (string id, Education education) =>
 {
 	var result = await EducationDB.UpdateAsync<Education>(id, "Education", education);
 
-	if (result != null)
+	if (result is not null)
 	{
 		return Results.Ok(result);
 	}
@@ -233,7 +243,7 @@ app.MapPut("/project/{id}", async (string id, Project project) =>
 {
 	var result = await ProjectDB.UpdateAsync<Project>(id, "Project", project);
 
-	if (result != null)
+	if (result is not null)
 	{
 		return Results.Ok(result);
 	}
@@ -279,7 +289,7 @@ app.MapPut("/skill/{id}", async (string id, Skills skill) =>
 {
 	var result = await SkillsDB.UpdateAsync<Skills>(id, "Skill", skill);
 
-	if (result != null)
+	if (result is not null)
 	{
 		return Results.Ok(result);
 	}
@@ -317,7 +327,12 @@ app.MapGet("/workexperiences", async () =>
 app.MapGet("/workexperience/{id}", async (string id) =>
 {
 	var experience = await WorkExperienceDB.GetByIDAsync<WorkExperience>(id, "Experience");
-	return Results.Ok(experience);
+	if (experience is not null)
+	{
+		return Results.Ok(experience);
+	}
+
+	return Results.NotFound("Not found...");
 });
 
 //U
@@ -325,7 +340,7 @@ app.MapPut("/workexperience/{id}", async (string id, WorkExperience workE) =>
 {
 	var result = await WorkExperienceDB.UpdateAsync<WorkExperience>(id, "Experience", workE);
 
-	if (result != null)
+	if (result is not null)
 	{
 		return Results.Ok(result);
 	}

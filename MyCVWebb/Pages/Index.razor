@@ -2,42 +2,26 @@
 @using MyCVWebb.Library.Data
 @using MyCVWebb.Library.Models
 @using System.Linq;
-@using MyCVWebb.Library.Models
 @inject IHttpClientFactory httpClientFactory
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
 <PageTitle>Viktor Andric</PageTitle>
 @* Firstpage: name, title, picture, link to github och linkedin *@
-<section style="height:100vh; width:100vw; overflow: hidden" class="bg-black p-0 m-0">
-	<div>
-		@if (IsAuthenticated)
-		{
-			<form method="post" action="Identity/Account/Logout">
-				<button type="submit" href="Identity/Account/Logout" class="btn btn-outline-danger ms-2 mt-2"><img style="height:40px" src="/logout-xxl.png" alt="LogOut" /></button>
-			</form>
-			<a type="submit" href="admin" class="btn btn-outline-light ms-2 mt-2"><img style="height:40px" src="/administrator-xxl.png" alt="Admin" /></a>
-		}
-		else
-		{
-			<a href="Identity/Account/Login"><img class="btn btn-outline-light ms-2 mt-2" style="height:40px" src="/login-xxl.png" alt="LogIn" /></a>
-		}
-
-
-	</div>
-
+<section style="height:100vh; width:100vw; overflow: hidden" class="bg-black p-0 m-0 d-flex justify-content-center align-items-center">
 	@if (aboutMe != null)
 	{
 		<div class="row d-flex justify-content-center align-items-center">
 			<div class="profile-image-container">
-				<img class="profile-image" src="/MicrosoftTeams-image3.png" alt="profilepicture" />
+				<img class="profile-image mt-5" src="@aboutMe.ImagePath" alt="profilepicture" />
 			</div>
 			<h1 class="text-center text-light" style="color:antiquewhite">@aboutMe.FullName</h1>
 			<h3 class="text-center text-light" style="color:antiquewhite">@aboutMe.Title</h3>
-		</div>
-		<div class="row p-0">
-			<div class="d-flex justify-content-center p-0">
-				<a class="me-5 align-content-center" style="max-height:5px;" href="@aboutMe.LinkedInURL"><img style="max-height:50px;" src="/iconmonstr-linkedin-3.png" alt="Link to linkedin" /></a>
-				<a class="ms-5 align-content-center" style="max-height:5px;" href="@aboutMe.GithubURL"><img style="max-height:50px;" src="/github-icon-256x249-eb1fu3cu.png" alt="link to github" /></a>
+		
+			<div class="row p-0">
+				<div class="d-flex justify-content-center align-items-center p-0">
+					<a class="me-5 align-content-center" style="max-height:5px;" href="@aboutMe.LinkedInURL"><img style="max-height:50px;" src="/iconmonstr-linkedin-3.png" alt="Link to linkedin" /></a>
+					<a class="ms-5 align-content-center" style="max-height:5px;" href="@aboutMe.GithubURL"><img style="max-height:50px;" src="/github-icon-256x249-eb1fu3cu.png" alt="link to github" /></a>
+				</div>
 			</div>
 		</div>
 	}
@@ -219,6 +203,33 @@
 			</EditForm>
 		</div>
 	</div>
+	<div class="container">
+		<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+			<div class="col-md-4 d-flex align-items-center">
+				@if (IsAuthenticated)
+				{
+					<form method="post" action="Identity/Account/Logout">
+						<button type="submit" href="Identity/Account/Logout" class="btn btn-outline-danger ms-2 mt-2"><img style="height:40px" src="/logout-xxl.png" alt="LogOut"/></button>
+					</form>
+					<a type="submit" href="admin" class="btn btn-outline-light ms-2 mt-2"><img style="height:40px" src="/administrator-xxl.png" alt="Admin"/></a>
+					
+				}
+				else
+				{
+					<a href="Identity/Account/Login"><img class="btn btn-outline-light ms-2 mt-2" style="height:40px" src="/login-xxl.png" alt="LogIn" /></a>
+				}
+			</div>
+
+			<ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+				<li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"></use></svg></a></li>
+				<li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"></use></svg></a></li>
+				<li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"></use></svg></a></li>
+			</ul>
+		</footer>
+	</div>
+	<div class="row">
+		
+	</div>
 </section>
 
 @code {
@@ -240,11 +251,11 @@
 		var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
 		IsAuthenticated = authState.User.Identity.IsAuthenticated;
 		aboutMe = await apiClient.GetFromJsonAsync<About>("about");
-		contact = await apiClient.GetFromJsonAsync<List<Contact>>("contacts");
-		myEducations = await apiClient.GetFromJsonAsync<List<Education>>("educations");
-		myProjects = await apiClient.GetFromJsonAsync<List<Project>>("projects");
-		mySkills = await apiClient.GetFromJsonAsync<List<Skills>>("skills");
-		myExperience = await apiClient.GetFromJsonAsync<List<WorkExperience>>("workexperiences");
+		contact.AddRange(await apiClient.GetFromJsonAsync<IEnumerable<Contact>>("contacts"));
+		myEducations.AddRange(await apiClient.GetFromJsonAsync<IEnumerable<Education>>("educations"));
+		myProjects.AddRange(await apiClient.GetFromJsonAsync<List<Project>>("projects"));
+		mySkills.AddRange(await apiClient.GetFromJsonAsync<List<Skills>>("skills"));
+		myExperience.AddRange(await apiClient.GetFromJsonAsync<List<WorkExperience>>("workexperiences"));
 		qoute = await apiClient.GetFromJsonAsync<Qoute>("qoute");
 	}
 

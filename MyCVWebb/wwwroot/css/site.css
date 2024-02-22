@@ -1,5 +1,4 @@
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
-
 html, body {
     font-family: "Helvetica Neue" Bold, Helvetica, sans-serif;
     color: antiquewhite;
@@ -76,6 +75,7 @@ a, .btn-link {
 .profile-image-container {
     display: flex;
     justify-content: center; /* Centrerar horisontellt */
+    align-items:center;
     max-width: 500px; /* Maxbredd för container */
     height: auto; /* Höjd anpassas automatiskt */
     overflow: hidden; /* Döljer delar av bilden som överskrider containerns storlek */
@@ -85,6 +85,7 @@ a, .btn-link {
 .profile-image {
     display: flex;
     justify-content: center; /* Centrerar horisontellt */
+    align-items:center;
     width: 100%; /* Gör bilden responsiv */
     height: auto; /* Bevarar bildens proportioner */
     object-fit: cover; /* Ser till att bilden täcker containern utan att förlora proportioner */

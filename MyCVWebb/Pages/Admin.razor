@@ -6,245 +6,249 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
 <PageTitle>Admin</PageTitle>
-<div class="bg-black text-light p-0 m-0" style="width=100vw">
-	<AuthorizeView >
-		<NotAuthorized>
-			<div>
-				<a type="submit" href="" class="btn btn-outline-light ms-2 mt-2"><img style="height:40px" src="/home-5-xxl.png" alt="Home Page" /></a>
-				<h2>You are not authorized</h2>
-			</div>
-		</NotAuthorized>
-		<Authorized Context="authContext">
-			<div>
-				<div>
-					<a type="submit" href="" class="btn btn-outline-light ms-2 mt-2"><img style="height:40px" src="/home-5-xxl.png" alt="Home Page"/></a>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-8 mx-auto">
-					<h2 class="text-center mb-4">Update About Me Section</h2>
-					<EditForm Model="updateAbout" OnValidSubmit="UpdateAbout" class="text-dark mx-2">
-						<DataAnnotationsValidator />
-						<ValidationSummary class="text-danger"/>
-						<div>
-							<label class="form-label text-light">Update name</label>
-							<InputText class="form-control" @bind-Value="updateAbout.FullName"></InputText>
-						</div>
-						<div>
-							<label class="form-label text-light">Update Title</label>
-							<InputText class="form-control" @bind-Value="updateAbout.Title"></InputText>
-						</div>
-						<div>
-							<label class="form-label text-light">Update Age</label>
-							<InputNumber class="form-control" @bind-Value="updateAbout.Age"></InputNumber>
-						</div>
-						<div>
-							<label class="form-label text-light">Update email</label>
-							<InputText class="form-control" @bind-Value="updateAbout.Email"></InputText>
-						</div>
-						<div>
-							<label class="form-label text-light">Update Phonenumber</label>
-							<InputText class="form-control" @bind-Value="updateAbout.PhoneNumber"></InputText>
-						</div>
-						<div>
-							<label class="form-label text-light">Update Adress</label>
-							<InputText class="form-control" @bind-Value="updateAbout.Adress"></InputText>
-						</div>
-						<div>
-							<label class="form-label text-light">Update Image</label>
-							<InputText class="form-control"  @bind-Value="updateAbout.ImagePath"></InputText>
-						</div>
-						<div>
-							<label class="form-label text-light">Update Description</label>
-							<InputText class="form-control" @bind-Value="updateAbout.Description"></InputText>
-						</div>
-						<div>
-							<label class="form-label text-light">Update Github Url</label>
-							<InputText class="form-control" @bind-Value="updateAbout.GithubURL"></InputText>
-						</div>
-						<div>
-							<label class="form-label text-light">Update LinkedIn Url</label>
-							<InputText class="form-control" @bind-Value="updateAbout.LinkedInURL"></InputText>
-						</div>
-						<button class="btn btn-outline-light mt-2" type="submit">Update About</button>
-					</EditForm>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-lg-8 mx-auto px-2">
-					<h2 class="text-center mb-4">Update Skills</h2>
-					<EditForm Model="newSkill" OnValidSubmit="SubmitSkill" class="mx-2">
-						<DataAnnotationsValidator />
-						<ValidationSummary />
+<div class="bg-black text-light p-0 m-0" style="width:100vw">
+<AuthorizeView>
+	<NotAuthorized>
+		<div>
+			<a type="submit" href="" class="btn btn-outline-light ms-2 mt-2"><img style="height:40px" src="/home-5-xxl.png" alt="Home Page" /></a>
+			<h2>You are not authorized</h2>
+		</div>
+	</NotAuthorized>
+	<Authorized Context="authContext">
+		<div class="row">
+			<div class="col-lg-8 mx-auto">
+				<h2 class="text-center mb-4">Update About Me Section</h2>
+				<EditForm Model="updateAbout" OnValidSubmit="UpdateAbout" class="text-dark mx-2">
+					<DataAnnotationsValidator/>
+					<ValidationSummary class="text-danger"/>
 					<div>
-							<label class="form-label text-light"> Choose Skill:</label>
-							<select class="form-control" value="@selectedSkill" @onchange="OnSkillSelected">
+						<label class="form-label text-light">Update name</label>
+						<InputText class="form-control" @bind-Value="updateAbout.FullName"></InputText>
+					</div>
+					<div>
+						<label class="form-label text-light">Update Title</label>
+						<InputText class="form-control" @bind-Value="updateAbout.Title"></InputText>
+					</div>
+					<div>
+						<label class="form-label text-light">Update Age</label>
+						<InputNumber class="form-control" @bind-Value="updateAbout.Age"></InputNumber>
+					</div>
+					<div>
+						<label class="form-label text-light">Update email</label>
+						<InputText class="form-control" @bind-Value="updateAbout.Email"></InputText>
+					</div>
+					<div>
+						<label class="form-label text-light">Update Phonenumber</label>
+						<InputText class="form-control" @bind-Value="updateAbout.PhoneNumber"></InputText>
+					</div>
+					<div>
+						<label class="form-label text-light">Update Adress</label>
+						<InputText class="form-control" @bind-Value="updateAbout.Adress"></InputText>
+					</div>
+					<div>
+						<label class="form-label text-light">Update Image</label>
+						<InputText class="form-control" @bind-Value="updateAbout.ImagePath"></InputText>
+					</div>
+					<div>
+						<label class="form-label text-light">Update Description</label>
+						<InputText class="form-control" @bind-Value="updateAbout.Description"></InputText>
+					</div>
+					<div>
+						<label class="form-label text-light">Update Github Url</label>
+						<InputText class="form-control" @bind-Value="updateAbout.GithubURL"></InputText>
+					</div>
+					<div>
+						<label class="form-label text-light">Update LinkedIn Url</label>
+						<InputText class="form-control" @bind-Value="updateAbout.LinkedInURL"></InputText>
+					</div>
+					<button class="btn btn-outline-light mt-2" type="submit">Update About</button>
+				</EditForm>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-lg-8 mx-auto px-2">
+				<h2 class="text-center mb-4">Update Skills</h2>
+				<EditForm Model="newSkill" OnValidSubmit="SubmitSkill" class="mx-2">
+					<DataAnnotationsValidator/>
+					<ValidationSummary/>
+					<div>
+						<label class="form-label text-light"> Choose Skill:</label>
+						<select class="form-control" value="@selectedSkill" @onchange="OnSkillSelected">
 							<option value=""> </option>
 							@foreach (var skill in mySkills)
 							{
-									<option value="@skill.Id">@skill.Title</option>
+								<option value="@skill.Id">@skill.Title</option>
 							}
 						</select>
 					</div>
-						<div>
-							<label class="form-label text-light">New Title</label>
-							<InputText class="form-control" @bind-Value="newSkill.Title"></InputText>
-						</div>
-						<div>
-							<label class="form-label text-light">Input experince in years</label>
-							<InputNumber class="form-control" @bind-Value="newSkill.Experience"></InputNumber>
-						</div>
-						<div>
-							<label class="form-label text-light">Input skill level</label>
-							<InputNumber class="form-control" @bind-Value="newSkill.SkillsLevel"></InputNumber>
-						</div>
-						<button class="btn btn-outline-light mt-2" type="submit">Add new skill</button>
-						<button class="btn btn-outline-light mt-2" @onclick="UpdateSkill">Update skill</button>
-						<button class="btn btn-outline-light mt-2" @onclick="DeleteSkill">Delete skill</button>
-					</EditForm>
-				</div>
+					<div>
+						<label class="form-label text-light">New Title</label>
+						<InputText class="form-control" @bind-Value="newSkill.Title"></InputText>
+					</div>
+					<div>
+						<label class="form-label text-light">Input experince in years</label>
+						<InputNumber class="form-control" @bind-Value="newSkill.Experience" min="0" max="100"></InputNumber>
+					</div>
+					<div>
+						<label class="form-label text-light">Input skill level</label>
+						<InputNumber class="form-control" @bind-Value="newSkill.SkillsLevel" min="0" max="100"></InputNumber>
+					</div>
+					<button class="btn btn-outline-light mt-2" type="submit">Add new skill</button>
+					<button class="btn btn-outline-light mt-2" @onclick="UpdateSkill">Update skill</button>
+					<button class="btn btn-outline-light mt-2" @onclick="DeleteSkill">Delete skill</button>
+				</EditForm>
 			</div>
-
-			<div class="row">
-				<div class="col-lg-8 mx-auto">
-					<h2 class="text-center mb-4">Update Projects</h2>
-					<EditForm Model="newProject" OnValidSubmit="SubmitProject" class="mx-2">
-						<DataAnnotationsValidator />
-						<ValidationSummary />
-						<div>
-							<label class="form-label text-light"> Choose Project:</label>
-							<select class="form-control" value="@selectedProject" @onchange="OnProjectSelected">
-								<option value=""> </option>
-								@foreach (var project in myProjects)
-								{
-									<option value="@project.Id">@project.Title</option>
-								}
-							</select>
-						</div>
-						<div>
-							<label class="form-label text-light">New Title</label>
-							<InputText class="form-control" @bind-Value="newProject.Title"></InputText>
-						</div>
-						<div>
-							<label class="form-label text-light">Input description</label>
-							<InputText class="form-control" @bind-Value="newProject.Description"></InputText>
-						</div>
-						<div>
-							<label class="form-label text-light">GithubUrl</label>
-							<InputText class="form-control" @bind-Value="newProject.GithubURL"></InputText>
-						</div>
-						<button class="btn btn-outline-light mt-2" type="submit">Add Project</button>
-						<button class="btn btn-outline-light mt-2" type="button" @onclick="UpdateProject">Update</button>
-						<button class="btn btn-outline-light mt-2" type="button" @onclick="DeleteProject">Delete</button>
-					</EditForm>
-				</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-lg-8 mx-auto">
+				<h2 class="text-center mb-4">Update Projects</h2>
+				<EditForm Model="newProject" OnValidSubmit="SubmitProject" class="mx-2">
+					<DataAnnotationsValidator/>
+					<ValidationSummary/>
+					<div>
+						<label class="form-label text-light"> Choose Project:</label>
+						<select class="form-control" value="@selectedProject" @onchange="OnProjectSelected">
+							<option value=""> </option>
+							@foreach (var project in myProjects)
+							{
+								<option value="@project.Id">@project.Title</option>
+							}
+						</select>
+					</div>
+					<div>
+						<label class="form-label text-light">New Title</label>
+						<InputText class="form-control" @bind-Value="newProject.Title"></InputText>
+					</div>
+					<div>
+						<label class="form-label text-light">Input description</label>
+						<InputText class="form-control" @bind-Value="newProject.Description"></InputText>
+					</div>
+					<div>
+						<label class="form-label text-light">GithubUrl</label>
+						<InputText class="form-control" @bind-Value="newProject.GithubURL"></InputText>
+					</div>
+					<button class="btn btn-outline-light mt-2" type="submit">Add Project</button>
+					<button class="btn btn-outline-light mt-2" type="button" @onclick="UpdateProject">Update</button>
+					<button class="btn btn-outline-light mt-2" type="button" @onclick="DeleteProject">Delete</button>
+				</EditForm>
 			</div>
-
-			<div class="row">
-				<div class="col-lg-8 mx-auto">
-					<h2 class="text-center mb-4">Update Educations</h2>
-					<EditForm Model="newEducation" OnValidSubmit="SubmitEducation" class="mx-2">
-						<DataAnnotationsValidator />
-						<ValidationSummary />
-						<div>
-							<label class="form-label text-light"> Choose Education:</label>
-							<select class="form-control" value="@selectedEducation" @onchange="OnEducationSelected">
-								<option value=""> </option>
-								@foreach (var education in myEducations)
-								{
-									<option value="@education.Id">@education.Title</option>
-								}
-							</select>
-						</div>
-						<div>
-							<label class="form-label text-light">New Title</label>
-							<InputText class="form-control" @bind-Value="newEducation.Title"></InputText>
-						</div>
-						<div>
-							<label class="form-label text-light">Input name of school</label>
-							<InputText class="form-control" @bind-Value="newEducation.SchoolName"></InputText>
-						</div>
-						<div>
-							<label class="form-label text-light">Input year/years when you studied</label>
-							<InputText class="form-control" @bind-Value="newEducation.Year"></InputText>
-						</div>
-						<button class="btn btn-outline-light mt-2" type="submit">Add Education</button>
-						<button class="btn btn-outline-light mt-2" type="button" @onclick="UpdateEducation">Update Education</button>
-						<button class="btn btn-outline-light mt-2" type="button" @onclick="DeleteEducation">Delete Education</button>
-					</EditForm>
-				</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-lg-8 mx-auto">
+				<h2 class="text-center mb-4">Update Educations</h2>
+				<EditForm Model="newEducation" OnValidSubmit="SubmitEducation" class="mx-2">
+					<DataAnnotationsValidator/>
+					<ValidationSummary/>
+					<div>
+						<label class="form-label text-light"> Choose Education:</label>
+						<select class="form-control" value="@selectedEducation" @onchange="OnEducationSelected">
+							<option value=""> </option>
+							@foreach (var education in myEducations)
+							{
+								<option value="@education.Id">@education.Title</option>
+							}
+						</select>
+					</div>
+					<div>
+						<label class="form-label text-light">New Title</label>
+						<InputText class="form-control" @bind-Value="newEducation.Title"></InputText>
+					</div>
+					<div>
+						<label class="form-label text-light">Input name of school</label>
+						<InputText class="form-control" @bind-Value="newEducation.SchoolName"></InputText>
+					</div>
+					<div>
+						<label class="form-label text-light">Input year/years when you studied</label>
+						<InputText class="form-control" @bind-Value="newEducation.Year"></InputText>
+					</div>
+					<button class="btn btn-outline-light mt-2" type="submit">Add Education</button>
+					<button class="btn btn-outline-light mt-2" type="button" @onclick="UpdateEducation">Update Education</button>
+					<button class="btn btn-outline-light mt-2" type="button" @onclick="DeleteEducation">Delete Education</button>
+				</EditForm>
 			</div>
-			<div class="row">
-				<div class="col-lg-8 mx-auto">
-					<h2 class="text-center mb-4">Update Work Experience</h2>
-					<EditForm Model="newExperience" OnValidSubmit="SubmitExperience" class="mx-2">
-						<DataAnnotationsValidator />
-						<ValidationSummary />
-						<div>
-							<label class="form-label text-light"> Choose Experience:</label>
-							<select class="form-control" value="@selectedExperience" @onchange="OnExperienceSelected">
-								<option value=""> </option>
-								@foreach (var experience in myExperience)
-								{
-									<option value="@experience.Id">@experience.Title</option>
-								}
-							</select>
-						</div>
-						<div>
-							<label class="form-label text-light">New Company name</label>
-							<InputText class="form-control" @bind-Value="newExperience.Company"></InputText>
-						</div>
-						<div>
-							<label class="form-label text-light">Input Title</label>
-							<InputText class="form-control" @bind-Value="newExperience.Title"></InputText>
-						</div>
-						<div>
-							<label class="form-label text-light">Input years</label>
-							<InputText class="form-control" @bind-Value="newExperience.Year"></InputText>
-						</div>
-						<div>
-							<label class="form-label text-light">Input Description</label>
-							<InputText class="form-control" @bind-Value="newExperience.Description"></InputText>
-						</div>
-						<button class="btn btn-outline-light mt-2" type="submit">Add Education</button>
-						<button class="btn btn-outline-light mt-2" type="button" @onclick="UpdateExperience">Update Education</button>
-						<button class="btn btn-outline-light mt-2" type="button" @onclick="DeleteExperience">Delete Education</button>
-					</EditForm>
-				</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-8 mx-auto">
+				<h2 class="text-center mb-4">Update Work Experience</h2>
+				<EditForm Model="newExperience" OnValidSubmit="SubmitExperience" class="mx-2">
+					<DataAnnotationsValidator/>
+					<ValidationSummary/>
+					<div>
+						<label class="form-label text-light"> Choose Experience:</label>
+						<select class="form-control" value="@selectedExperience" @onchange="OnExperienceSelected">
+							<option value=""> </option>
+							@foreach (var experience in myExperience)
+							{
+								<option value="@experience.Id">@experience.Title</option>
+							}
+						</select>
+					</div>
+					<div>
+						<label class="form-label text-light">New Company name</label>
+						<InputText class="form-control" @bind-Value="newExperience.Company"></InputText>
+					</div>
+					<div>
+						<label class="form-label text-light">Input Title</label>
+						<InputText class="form-control" @bind-Value="newExperience.Title"></InputText>
+					</div>
+					<div>
+						<label class="form-label text-light">Input years</label>
+						<InputText class="form-control" @bind-Value="newExperience.Year"></InputText>
+					</div>
+					<div>
+						<label class="form-label text-light">Input Description</label>
+						<InputText class="form-control" @bind-Value="newExperience.Description"></InputText>
+					</div>
+					<button class="btn btn-outline-light mt-2" type="submit">Add Experience</button>
+					<button class="btn btn-outline-light mt-2" type="button" @onclick="UpdateExperience">Update Experience</button>
+					<button class="btn btn-outline-light mt-2" type="button" @onclick="DeleteExperience">Delete Experience</button>
+				</EditForm>
 			</div>
-			<div class="row mx-3">
-				<div class="d-flex align-items-center justify-content-center col-md-10 mx-auto">
-					<table class="my-5" id="contactTable" >
-						<tr>
-							<th>Name</th>
-							<th>Email</th>
-							<th>Number</th>
-							<th>Message</th>
-							<th>Delete</th>
-						</tr>
-						@if(MyContacts != null)
+		</div>
+		<div class="row mx-3">
+			<div class="d-flex align-items-center justify-content-center col-md-10 mx-auto">
+				<table class="my-5" id="contactTable">
+					<tr>
+						<th>Name</th>
+						<th>Email</th>
+						<th>Number</th>
+						<th>Message</th>
+						<th>Delete</th>
+					</tr>
+					@if (MyContacts != null)
+					{
+						@foreach (var contact in MyContacts)
 						{
-								@foreach(var contact in MyContacts)
-								{
-									<tr>
-										<td>@contact.FullName</td>
-										<td>@contact.Email</td>
-										<td>@contact.PhoneNumber</td>
-										<td>@contact.Message</td>
-										<td><button class="btn btn-outline-danger" @onclick="() => DeleteContact(contact.Id)">Delete</button></td>
-									</tr>
-								}
+							<tr>
+								<td>@contact.FullName</td>
+								<td>@contact.Email</td>
+								<td>@contact.PhoneNumber</td>
+								<td>@contact.Message</td>
+								<td><button class="btn btn-outline-danger" @onclick="() => DeleteContact(contact.Id)">Delete</button></td>
+							</tr>
 						}
-						else
-						{
-							<p>Loading....</p>
-						}
-					</table>	
-				</div>		
+					}
+					else
+					{
+						<p>Loading....</p>
+					}
+				</table>
 			</div>
-		</Authorized>
-	</AuthorizeView>
+		</div>
+		<div class="container">
+			<footer class="d-flex flex-wrap justify-content-between align-items-center pt-3 my-4 border-top">
+				<div class="col-md-4 d-flex align-items-center">
+					<div>
+						<a type="submit" href="" class="btn btn-outline-light ms-2 mt-2"><img style="height:40px" src="/home-5-xxl.png" alt="Home Page"/></a>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</Authorized>
+</AuthorizeView>
 </div>
 
 @code {
@@ -268,7 +272,6 @@
 	private string selectedSkill;
 	private string selectedEducation;
 	private string selectedExperience;
-	private string selectedContact;
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -323,7 +326,7 @@
 	{
 		if(selectedSkill == "")
 		{
-			Console.WriteLine("No skill choosen");
+			Console.WriteLine("No skill chosen");
 		}
 		else
 		{
@@ -338,7 +341,7 @@
 	{
 		if(string.IsNullOrEmpty(selectedSkill))
 		{
-			Console.WriteLine("No skill choosen");
+			Console.WriteLine("No skill chosen");
 		}
 		else
 		{	
@@ -374,7 +377,7 @@
 	{
 		if(string.IsNullOrEmpty(selectedProject))
 		{
-			Console.WriteLine("No Project choosen");
+			Console.WriteLine("No Project chosen");
 		}
 		else
 		{
@@ -388,7 +391,7 @@
 	{
 		if(string.IsNullOrEmpty(selectedProject))
 		{
-			Console.WriteLine("No Project choosen");
+			Console.WriteLine("No Project chosen");
 		}
 		else
 		{	
@@ -424,7 +427,7 @@
 	{
 		if (string.IsNullOrEmpty(selectedEducation))
 		{
-			Console.WriteLine("No education choosen");
+			Console.WriteLine("No education chosen");
 		}
 		else
 		{
@@ -439,7 +442,7 @@
 	{
 		if(string.IsNullOrEmpty(selectedEducation))
 		{
-			Console.WriteLine("No education choosen");
+			Console.WriteLine("No education chosen");
 		}
 		else
 		{
@@ -475,7 +478,7 @@
 	{
 		if(string.IsNullOrEmpty(selectedExperience))
 		{
-			Console.WriteLine("No experience choosen");
+			Console.WriteLine("No experience chosen");
 		}
 		else
 		{
@@ -490,7 +493,7 @@
 	{
 		if(string.IsNullOrEmpty(selectedExperience))
 		{
-			Console.WriteLine("No experince choosen");
+			Console.WriteLine("No experience chosen");
 		}
 		else
 		{	
